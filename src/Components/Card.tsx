@@ -1,8 +1,9 @@
 
 export function Card(){
     return(
-        <div>
-            Card 
+        <div className="cardContainer">
+            
+             
         </div>
     );
 }
