@@ -1,8 +1,21 @@
+import { useState } from "react";
 import { Card } from "./Card";
 
 export function NewsApp(){
     const API_KEY = import.meta.env.VITE_API_KEY;
-    console.log(API_KEY);
+    const [search, setSearch] = useState("India");
+    const [newsData, setNewsData] = useState(null);
+
+    const getData = async () => {
+        const response = await fetch(`https://newsapi.org/v2/everything?q=${search}&apiKey=${API_KEY}`);
+        const jsonData = await response.json();
+        setNewsData(jsonData.articles);
+    }
+
+    const handleInput = (e : React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(e.target.value);
+    }
+
     return(
         <div>
             <nav>
@@ -15,8 +28,8 @@ export function NewsApp(){
 
                 </ul>
                 <div className="serachBar">
-                    <input type="text" placeholder="Search News" />
-                    <button>Search</button>
+                    <input type="text" placeholder="Search News" onChange={handleInput} />
+                    <button onClick={getData}>Search</button>
 
                 </div>
             </nav>
@@ -34,7 +47,7 @@ export function NewsApp(){
             </div>
 
             <div>
-                <Card />
+                <Card data={newsData} />
             </div>
         </div>
     );
