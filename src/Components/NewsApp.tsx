@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "./Card";
 
 export function NewsApp(){
@@ -15,35 +15,42 @@ export function NewsApp(){
     const handleInput = (e : React.ChangeEvent<HTMLInputElement>) => {
         setSearch(e.target.value);
     }
+    
+    useEffect(()=>{
+        getData()
+    }, []);
+
+    const userInput = (e: any) => {
+        console.log(e.target.value);
+        setSearch(e.target.value);
+    }
 
     return(
         <div>
             <nav>
                 <div>
-                    <h1>Trendy news </h1>
+                    <h1>News</h1>
                 </div>
-                <ul>
-                    <a>All News</a>
-                    <a>Trending</a>
-
+                <ul style={{display:"flex", gap:"11px"}}>
+                    <a href="https://www.bbc.com" target="_blank" style={{fontWeight:600, fontSize:"17px"}}>All News</a>
+                    <a href="https://www.bbc.com/news" target="_blank" style={{fontWeight:600, fontSize:"17px"}}>Trending</a>
                 </ul>
                 <div className="serachBar">
                     <input type="text" placeholder="Search News" onChange={handleInput} />
                     <button onClick={getData}>Search</button>
-
                 </div>
             </nav>
+
             <div>
                 <p className="head">Stay updated with Treandy news</p>
             </div>
+
             <div className="categoryBtn">
-                <button>Sports </button>
-                <button>Politics </button>
-                <button>Entertainment </button>
-                <button>Health </button>
-                <button>Fitness </button>
-
-
+                <button onClick={userInput} value="sports">Sports </button>
+                <button onClick={userInput} value="politics">Politics </button>
+                <button onClick={userInput} value="entertainment">Entertainment </button>
+                <button onClick={userInput} value="health">Health </button>
+                <button onClick={userInput} value="fitness">Fitness </button>
             </div>
 
             <div>
